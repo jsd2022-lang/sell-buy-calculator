@@ -2,7 +2,7 @@ import streamlit as st
 
 # 페이지 설정
 st.set_page_config(
-    page_title="퉁치기 계산기",
+    page_title="매수매도 계산기",
     page_icon="📊",
     layout="wide"
 )
@@ -11,7 +11,7 @@ st.set_page_config(
 if 'sell_orders' not in st.session_state:
     st.session_state.sell_orders = []
 
-st.title("📊 퉁치기 계산기")
+st.title("📊 매수매도 계산기")
 
 # 매수 주문 섹션
 st.header("매수 주문")
@@ -19,9 +19,9 @@ col1, col2, col3 = st.columns(3)
 with col1:
     buy_type = st.text_input("종류", value="LOC", key="buy_type")
 with col2:
-    buy_price = st.number_input("가격", min_value=0.0, value=42.62, step=0.01, format="%.2f", key="buy_price")
+    buy_price = st.number_input("가격", min_value=0.0, value=0.0, step=0.01, format="%.2f", key="buy_price")
 with col3:
-    buy_quantity = st.number_input("수량", min_value=0, value=12, step=1, key="buy_quantity")
+    buy_quantity = st.number_input("수량", min_value=0, value=0, step=1, key="buy_quantity")
 
 st.divider()
 
