@@ -7,6 +7,53 @@ st.set_page_config(
     layout="wide"
 )
 
+# 모바일 최적화 CSS
+st.markdown("""
+    <style>
+    /* 입력 필드 컴팩트하게 */
+    .stNumberInput > div > div > input,
+    .stSelectbox > div > div > select,
+    .stTextInput > div > div > input {
+        padding: 0.25rem 0.5rem !important;
+        font-size: 0.9rem !important;
+    }
+    
+    /* 라벨 컴팩트하게 */
+    .stNumberInput label,
+    .stSelectbox label,
+    .stTextInput label {
+        font-size: 0.85rem !important;
+        padding-bottom: 0.2rem !important;
+    }
+    
+    /* 컬럼 간격 줄이기 */
+    div[data-testid="column"] {
+        padding: 0 0.3rem !important;
+    }
+    
+    /* 작은 화면에서 더 컴팩트하게 */
+    @media (max-width: 768px) {
+        .stNumberInput > div > div > input,
+        .stSelectbox > div > div > select,
+        .stTextInput > div > div > input {
+            padding: 0.2rem 0.4rem !important;
+            font-size: 0.85rem !important;
+        }
+        
+        .stNumberInput label,
+        .stSelectbox label,
+        .stTextInput label {
+            font-size: 0.75rem !important;
+            padding-bottom: 0.1rem !important;
+        }
+        
+        div[data-testid="column"] {
+            padding: 0 0.2rem !important;
+        }
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 # 세션 상태 초기화
 if 'sell_orders' not in st.session_state:
     st.session_state.sell_orders = []
@@ -15,7 +62,7 @@ st.title("📊 매수매도 계산기")
 
 # 매수 주문 섹션
 st.header("매수 주문")
-col1, col2, col3 = st.columns([2, 2.5, 2.5])
+col1, col2, col3 = st.columns([1.3, 1.8, 1.8], gap="small")
 with col1:
     buy_type = st.selectbox("종류", ["LOC", "MOC"], key="buy_type")
 with col2:
@@ -51,7 +98,7 @@ if len(st.session_state.sell_orders) > 0:
         if 'is_moc' not in st.session_state.sell_orders[idx]:
             st.session_state.sell_orders[idx]['is_moc'] = (order.get('type', 'LOC') == 'MOC')
         
-        col1, col2, col3, col4 = st.columns([1.5, 2, 2, 1])
+        col1, col2, col3, col4 = st.columns([1.2, 1.6, 1.6, 0.8], gap="small")
         with col1:
             sell_type = st.selectbox(
                 "종류", 
@@ -252,4 +299,5 @@ if 'result' in st.session_state:
             st.write(f"{sell_order['type']} - 가격: 종가, 수량: {sell_order['quantity']}")
         else:
             st.write(f"{sell_order['type']} - 가격: {sell_order['price']:.2f}, 수량: {sell_order['quantity']}")
+
 
